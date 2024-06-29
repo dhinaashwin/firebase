@@ -121,7 +121,7 @@ function App() {
                 <img src={dress.imageUrl} alt={dress.name} style={{ maxWidth: '200px' }} />
                 <p>Name: {dress.name}</p>
                 <p>Price: {dress.price}</p>
-                <button onClick={() => handleDelete(dress._id)}>Delete</button>
+                <button onClick={() => handleDelete(dress._id)}>Delete Item</button>
               </li>
             ))}
           </ul>

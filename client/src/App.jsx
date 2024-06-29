@@ -13,6 +13,7 @@ function App() {
   const [price, setPrice] = useState('');
   const [showAllItems, setShowAllItems] = useState(false); // State to toggle showing all items
   const [dresses, setDresses] = useState([]); 
+
   const handleClick = async () => {
     if (!img) {
       setUploadStatus('No file selected');
@@ -35,7 +36,7 @@ function App() {
 
       setUploadStatus('Upload and data save successful');
       fetchImages();
-     
+      fetchDresses();
 
     } catch (error) {
       setUploadStatus(`Upload failed: ${error.message}`);
@@ -58,9 +59,11 @@ function App() {
       console.error('Failed to fetch images:', error);
     }
   };
+
   const toggleShowItems = () => {
     setShowAllItems(prev => !prev); // Toggle showAllItems state
   };
+
   const fetchDresses = async () => {
     try {
       const response = await fetch('https://firebase-server-two.vercel.app/items');
@@ -70,11 +73,22 @@ function App() {
       console.error('Failed to fetch dresses:', error);
     }
   };
+
+  const handleDelete = async (id) => {
+    try {
+      await fetch(`https://firebase-server-two.vercel.app/items/${id}`, {
+        method: 'DELETE',
+      });
+      setDresses(dresses.filter(dress => dress._id !== id));
+    } catch (error) {
+      console.error('Failed to delete dress:', error);
+    }
+  };
+
   useEffect(() => {
     fetchImages();
     fetchDresses();
   }, []);
-
 
   return (
     <div className="App">
@@ -93,7 +107,16 @@ function App() {
       <button onClick={toggleShowItems}>
         {showAllItems ? 'Hide Items' : 'Show All Items'}
       </button>
+      {showAllItems && (
         <div>
+          <h2>All Items:</h2>
+          {imgUrls.map((url, index) => (
+            <img key={index} src={url} alt={`Item ${index}`} style={{ maxWidth: '200px', margin: '10px' }} />
+          ))}
+        </div>
+      )}
+
+      <div>
         <h2>Dresses:</h2>
         <ul>
           {dresses.map(dress => (
@@ -101,6 +124,7 @@ function App() {
               <img src={dress.imageUrl} alt={dress.name} style={{ maxWidth: '200px' }} />
               <p>Name: {dress.name}</p>
               <p>Price: {dress.price}</p>
+              <button onClick={() => handleDelete(dress._id)}>Delete</button>
             </li>
           ))}
         </ul>

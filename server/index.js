@@ -1,4 +1,3 @@
-
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -8,11 +7,10 @@ const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
+
 const allowCors = fn => async (req, res) => {
   res.setHeader('Access-Control-Allow-Credentials', true)
   res.setHeader('Access-Control-Allow-Origin', '*')
-  // another common pattern
-  // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
   res.setHeader(
     'Access-Control-Allow-Headers',
@@ -24,12 +22,6 @@ const allowCors = fn => async (req, res) => {
   }
   return await fn(req, res)
 }
-
-const handler = (req, res) => {
-  const d = new Date()
-  res.end(d.toString())
-}  
-
 
 const mongoURI = 'mongodb+srv://dhinaashwin11:Mongodbpassword@cluster0.j76mlht.mongodb.net/new-database?retryWrites=true&w=majority&appName=Cluster0';
 
@@ -62,9 +54,6 @@ app.post('/upload', async (req, res) => {
     res.status(500).send('Failed to save item');
   }
 });
-app.get('/', (req, res) => {
-  res.send("hi")
-})
 
 // GET endpoint to fetch all items from MongoDB
 app.get('/items', async (req, res) => {
@@ -77,8 +66,18 @@ app.get('/items', async (req, res) => {
   }
 });
 
+// DELETE endpoint to delete an item from MongoDB
+app.delete('/items/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    await Item.findByIdAndDelete(id);
+    res.status(200).send('Item deleted');
+  } catch (error) {
+    console.error('Error deleting item:', error);
+    res.status(500).send('Failed to delete item');
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
-
-

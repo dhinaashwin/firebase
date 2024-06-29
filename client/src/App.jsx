@@ -108,18 +108,9 @@ function App() {
         </div>
       )}
 
-      {/* Button to toggle showing all items */}
       <button onClick={toggleShowItems}>
-        {showAllItems ? 'Hide Items' : 'Show All Items'}
+        {showAllItems ? 'Hide All Items' : 'Show All Items'}
       </button>
-      {showAllItems && (
-        <div>
-          <h2>All Items:</h2>
-          {imgUrls.map((url, index) => (
-            <img key={index} src={url} alt={`Item ${index}`} style={{ maxWidth: '200px', margin: '10px' }} />
-          ))}
-        </div>
-      )}
 
       {showAllItems && (
         <div>
@@ -141,4 +132,3 @@ function App() {
 }
 
 export default App;
-

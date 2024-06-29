@@ -35,7 +35,7 @@ function App() {
 
       setUploadStatus('Upload and data save successful');
       fetchImages();
-
+     
 
     } catch (error) {
       setUploadStatus(`Upload failed: ${error.message}`);
@@ -61,9 +61,6 @@ function App() {
   const toggleShowItems = () => {
     setShowAllItems(prev => !prev); // Toggle showAllItems state
   };
-  useEffect(() => {
-    fetchImages();
-  }, []);
   const fetchDresses = async () => {
     try {
       const response = await fetch('https://firebase-server-two.vercel.app/');
@@ -73,6 +70,12 @@ function App() {
       console.error('Failed to fetch dresses:', error);
     }
   };
+  useEffect(() => {
+    fetchImages();
+    fetchDresses();
+  }, []);
+
+
   return (
     <div className="App">
       <div>

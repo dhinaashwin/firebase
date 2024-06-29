@@ -62,6 +62,9 @@ app.post('/upload', async (req, res) => {
     res.status(500).send('Failed to save item');
   }
 });
+app.get('/', (req, res) => {
+  res.send("hi")
+})
 
 // GET endpoint to fetch all items from MongoDB
 app.get('/items', async (req, res) => {

@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 
-const mongoURI = 'mongodb+srv://dhinaashwin11:Mongodbpassword@demo-cluster.uvfzqd3.mongodb.net/?appName=demo-cluster';
+const mongoURI = 'mongodb+srv://dhinaashwin11:Mongodbpassword@cluster0.j76mlht.mongodb.net/new-database?retryWrites=true&w=majority&appName=Cluster0';
 
 mongoose.connect(mongoURI, {
   useNewUrlParser: true,

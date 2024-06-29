@@ -66,7 +66,7 @@ function App() {
   }, []);
   const fetchDresses = async () => {
     try {
-      const response = await fetch('https://firebase-server-two.vercel.app/items');
+      const response = await fetch('https://firebase-server-two.vercel.app/');
       const data = await response.json();
       setDresses(data);
     } catch (error) {

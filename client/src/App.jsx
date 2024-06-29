@@ -25,7 +25,7 @@ function App() {
       console.log('Uploaded image URL:', url); // Log the image URL to the console
 
       // Send data to MongoDB via your backend server
-      await fetch('http://localhost:5000/upload', {
+      await fetch('https://firebase-server-two.vercel.app/upload', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -35,6 +35,8 @@ function App() {
 
       setUploadStatus('Upload and data save successful');
       fetchImages();
+
+
     } catch (error) {
       setUploadStatus(`Upload failed: ${error.message}`);
     }
@@ -62,7 +64,15 @@ function App() {
   useEffect(() => {
     fetchImages();
   }, []);
-
+  const fetchDresses = async () => {
+    try {
+      const response = await fetch('https://firebase-server-two.vercel.app/items');
+      const data = await response.json();
+      setDresses(data);
+    } catch (error) {
+      console.error('Failed to fetch dresses:', error);
+    }
+  };
   return (
     <div className="App">
       <div>

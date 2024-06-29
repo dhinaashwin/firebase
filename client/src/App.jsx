@@ -93,6 +93,8 @@ function App() {
 
   return (
     <div className="App">
+      {/* left sidebar */}
+      <div> 
       <div>
         <label htmlFor="name">Name</label>
         <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
@@ -107,6 +109,9 @@ function App() {
           <img src={previewUrl} alt="Selected" style={{ maxWidth: '200px', marginTop: '10px' }} />
         </div>
       )}
+</div>
+<div>
+ {/* right side */}
 
       <button onClick={toggleShowItems}>
         {showAllItems ? 'Hide All Items' : 'Show All Items'}
@@ -127,6 +132,7 @@ function App() {
           </ul>
         </div>
       )}
+      </div>
     </div>
   );
 }

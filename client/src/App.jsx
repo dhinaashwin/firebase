@@ -12,7 +12,7 @@ function App() {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [showAllItems, setShowAllItems] = useState(false); // State to toggle showing all items
-  const [dresses, setDresses] = useState([]); 
+  const [dresses, setDresses] = useState([]);
 
   const handleClick = async () => {
     if (!img) {
@@ -29,15 +29,14 @@ function App() {
       await fetch('https://firebase-server-two.vercel.app/upload', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, price, imageUrl: url })
+        body: JSON.stringify({ name, price, imageUrl: url }),
       });
 
       setUploadStatus('Upload and data save successful');
       fetchImages();
       fetchDresses();
-
     } catch (error) {
       setUploadStatus(`Upload failed: ${error.message}`);
     }
@@ -53,7 +52,7 @@ function App() {
     try {
       const listRef = ref(imageDb, 'files');
       const res = await listAll(listRef);
-      const urls = await Promise.all(res.items.map(item => getDownloadURL(item)));
+      const urls = await Promise.all(res.items.map((item) => getDownloadURL(item)));
       setImgUrls(urls);
     } catch (error) {
       console.error('Failed to fetch images:', error);
@@ -61,7 +60,7 @@ function App() {
   };
 
   const toggleShowItems = () => {
-    setShowAllItems(prev => !prev); // Toggle showAllItems state
+    setShowAllItems((prev) => !prev); // Toggle showAllItems state
   };
 
   const fetchDresses = async () => {
@@ -80,7 +79,7 @@ function App() {
         await fetch(`https://firebase-server-two.vercel.app/items/${id}`, {
           method: 'DELETE',
         });
-        setDresses(dresses.filter(dress => dress._id !== id));
+        setDresses(dresses.filter((dress) => dress._id !== id));
       } catch (error) {
         console.error('Failed to delete dress:', error);
       }
@@ -103,7 +102,11 @@ function App() {
       <input type="file" onChange={handleImageChange} />
       <button onClick={handleClick}>Upload</button>
       {uploadStatus && <p>{uploadStatus}</p>}
-      {previewUrl && <div><img src={previewUrl} alt="Selected" style={{ maxWidth: '200px', marginTop: '10px' }} /></div>}
+      {previewUrl && (
+        <div>
+          <img src={previewUrl} alt="Selected" style={{ maxWidth: '200px', marginTop: '10px' }} />
+        </div>
+      )}
 
       {/* Button to toggle showing all items */}
       <button onClick={toggleShowItems}>
@@ -118,21 +121,24 @@ function App() {
         </div>
       )}
 
-      <div>
-        <h2>Dresses:</h2>
-        <ul>
-          {dresses.map(dress => (
-            <li key={dress._id}>
-              <img src={dress.imageUrl} alt={dress.name} style={{ maxWidth: '200px' }} />
-              <p>Name: {dress.name}</p>
-              <p>Price: {dress.price}</p>
-              <button onClick={() => handleDelete(dress._id)}>Delete</button>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {showAllItems && (
+        <div>
+          <h2>Dresses:</h2>
+          <ul>
+            {dresses.map((dress) => (
+              <li key={dress._id}>
+                <img src={dress.imageUrl} alt={dress.name} style={{ maxWidth: '200px' }} />
+                <p>Name: {dress.name}</p>
+                <p>Price: {dress.price}</p>
+                <button onClick={() => handleDelete(dress._id)}>Delete</button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
 
 export default App;
+

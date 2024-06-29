@@ -25,7 +25,7 @@ function App() {
       console.log('Uploaded image URL:', url); // Log the image URL to the console
 
       // Send data to MongoDB via your backend server
-      await fetch('http://localhost:5000/upload', {
+      await fetch('https://firebase-server-two.vercel.app/upload', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

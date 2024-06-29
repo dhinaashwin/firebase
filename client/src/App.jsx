@@ -75,13 +75,15 @@ function App() {
   };
 
   const handleDelete = async (id) => {
-    try {
-      await fetch(`https://firebase-server-two.vercel.app/items/${id}`, {
-        method: 'DELETE',
-      });
-      setDresses(dresses.filter(dress => dress._id !== id));
-    } catch (error) {
-      console.error('Failed to delete dress:', error);
+    if (window.confirm('Are you sure you want to delete this item?')) {
+      try {
+        await fetch(`https://firebase-server-two.vercel.app/items/${id}`, {
+          method: 'DELETE',
+        });
+        setDresses(dresses.filter(dress => dress._id !== id));
+      } catch (error) {
+        console.error('Failed to delete dress:', error);
+      }
     }
   };
 

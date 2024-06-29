@@ -100,6 +100,18 @@ function App() {
           ))}
         </div>
       )}
+        <div>
+        <h2>Dresses:</h2>
+        <ul>
+          {dresses.map(dress => (
+            <li key={dress._id}>
+              <img src={dress.imageUrl} alt={dress.name} style={{ maxWidth: '200px' }} />
+              <p>Name: {dress.name}</p>
+              <p>Price: {dress.price}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

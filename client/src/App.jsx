@@ -12,7 +12,7 @@ function App() {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [showAllItems, setShowAllItems] = useState(false); // State to toggle showing all items
-
+  const [dresses, setDresses] = useState([]); 
   const handleClick = async () => {
     if (!img) {
       setUploadStatus('No file selected');
